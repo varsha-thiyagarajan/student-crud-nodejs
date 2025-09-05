@@ -58,6 +58,14 @@ app.post("/update",(req,res)=>
         })
     })
 })
+app.delete("/delete/:id", (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM Students WHERE StudentID = ?";
+    db.query(sql, [id], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: "🗑️ Student deleted successfully!" });
+    });
+});
 
 app.listen(5000, () => {
     console.log("Server running at http://localhost:5000");

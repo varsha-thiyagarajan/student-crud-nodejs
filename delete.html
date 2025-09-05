@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Student</title>
+</head>
+<body>
+  <h1>Delete Student</h1>
+
+  <label>Enter Student ID to Delete:</label>
+  <input id="studentId" placeholder="Student ID"><br><br>
+
+  <button onclick="deleteStudent()">Delete</button>
+
+  <div id="resultdiv"></div><br><br>
+<a href="Main.html"><button>Go to Home Page</button></a>
+  <script>
+    async function deleteStudent() {
+      const id = document.getElementById("studentId").value;
+      const resultdiv = document.getElementById("resultdiv");
+
+      if (!id) {
+        resultdiv.innerHTML = "⚠️ Please enter a student ID.";
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5000/delete/${id}`, {
+          method: "DELETE",
+        });
+
+        const data = await res.json();
+        resultdiv.innerHTML = data.message || "Deleted successfully!";
+      } catch (err) {
+        console.error("Error:", err);
+        resultdiv.innerHTML = "❌ Failed to delete student.";
+      }
+    }
+  </script>
+</body>
+</html>
