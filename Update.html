@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updating the student details</title>
+</head>
+<body>
+    <h1>UPDATE STUDENT DETAILS</h1>
+     <form>
+        <label>ID:</label>
+        <input id="id" placeholder="Enter the id"><br><br>
+        <label>Name:</label>
+        <input id="name" placeholder="Enter your name"><br><br>
+        <label>Age:</label>
+        <input id="age" placeholder="Enter your age"><br><br>
+        <label>Department</label>
+        <input id="department" placeholder="Enter your department"><br><br>
+        <label>Grade</label>
+        <input id="grade" placeholder="Enter your Grade in capital">
+    </form><br>
+    <h3>Update</h3>
+    <select id="update">
+        <option value="StudentId">Id</option>
+        <option value="Name">Student Name</option>
+        <option value="Department">Department</option>
+        <option value="Age">Age</option>
+        <option value="Grade">Grade</option>
+    </select><br><br>
+    <label >From:</label>
+    <input id="from"><br><br>
+    <label>To:</label>
+    <input id="to"><br><br>
+    <button onclick="update()" id="update">UPDATE</button>
+    <div id="resultdiv"></div><br><br>
+    <a href="Main.html"><button>Go to Home Page</button></a>
+</body>
+<script>
+    async function update()
+    {
+            const update=document.getElementById('update').value
+            const from=document.getElementById('from').value
+            const to=document.getElementById('to').value
+            console.log(update,from,to)
+            const res=await fetch("http://localhost:5000/update",{
+                method:"POST",
+                headers: { "Content-Type": "application/json" },
+                body:JSON.stringify({update,from,to})
+            }
+            
+        )
+        const data=await res.json()
+        const resultdiv=document.getElementById('resultdiv')
+        resultdiv.innerHTML=data.message
+    }
+</script>
+</html>

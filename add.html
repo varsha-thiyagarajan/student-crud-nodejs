@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding student data</title>
+</head>
+<body>
+    <h1>ADD THE STUDENTS DETAILS</h1>
+    <form>
+        <label>ID:</label>
+        <input id="id" placeholder="Enter the id"><br><br>
+        <label>Name:</label>
+        <input id="name" placeholder="Enter your name"><br><br>
+        <label>Age:</label>
+        <input id="age" placeholder="Enter your age"><br><br>
+        <label>Department</label>
+        <input id="department" placeholder="Enter your department"><br><br>
+        <label>Grade</label>
+        <input id="grade" placeholder="Enter your Grade in capital">
+    </form><br>
+    <button type="button" onclick="addstudent()">ADD THE DETAILS</button>
+    <div id="resultdiv"></div><br><br><br>
+    <a href="Main.html"><button>Go to Home Page</button></a>
+</body>
+
+<script>
+   async function addstudent()
+
+{
+    const id= document.getElementById('id').value
+    const name=document.getElementById('name').value
+    const age=document.getElementById('age').value
+    const department=document.getElementById('department').value
+    const grade=document.getElementById('grade').value
+    const resultdiv=document.getElementById('resultdiv')
+    console.log(id,name,age,department,grade)
+      const res = await fetch("http://localhost:5000/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, name, age, department, grade })
+    });
+    const data=await res.json()
+    resultdiv.innerHTML=data.message
+
+
+
+
+}
+</script>
+</html>

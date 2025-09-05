@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetching the data</title>
+</head>
+<body>
+    <label>Enter the Name:</label>
+    <input placeholder="Enter the name" id="name">
+    <button onclick="getname()">Fetch the data</button>
+        <div id="result" style="margin-top:20px; font-family:Arial; font-size:16px;"></div>
+<a href="Main.html"><button>Go to Home Page</button></a>
+    <script>
+        async function getname() {
+            const name = document.getElementById("name").value;
+            const res = await fetch(`http://localhost:5000/student/${name}`);
+            const data = await res.json();
+             const resultDiv = document.getElementById("result");
+
+            if (data.message) {
+                alert(data.message);
+            } else {
+                resultDiv.innerHTML = `
+                        <h3>Student Details</h3>
+                        <table border="1" cellpadding="8" style="border-collapse:collapse;">
+                            <tr><td><b>ID</b></td><td>${data.StudentID}</td></tr>
+                            <tr><td><b>Name</b></td><td>${data.Name}</td></tr>
+                            <tr><td><b>Age</b></td><td>${data.Age}</td></tr>
+                            <tr><td><b>Department</b></td><td>${data.Department}</td></tr>
+                            <tr><td><b>Grade</b></td><td>${data.Grade}</td></tr>
+                        </table>
+                    `;
+            }
+
+            console.log(name);
+        }
+    </script>
+</body>
+</html>
